@@ -2,9 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import connectDB from './config/db.js';
 
 
 dotenv.config();
+
+// Connect to database
+connectDB();
 
 const app = express()
 
@@ -19,9 +23,6 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-// user routes
-import userRoutes from './routes/user.routes.js';
-app.use('/api/users', userRoutes);
 
 // auth routes
 import authRoutes from './routes/auth.routes.js';
