@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-import cloudinaryStorage from "multer-storage-cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 import multer from "multer";
 
 cloudinary.config({
@@ -8,7 +8,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_SECRET_KEY
 })
 
-const storage = new cloudinaryStorage({
+const storage = new CloudinaryStorage({
     cloudinary,
     folder : "EstateScout",
     allowedFormats : ["jpg", "png", "jpeg"],

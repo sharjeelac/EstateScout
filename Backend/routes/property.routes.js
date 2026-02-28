@@ -6,7 +6,7 @@ import {
   updateProperty,
   deleteProperty,
 } from "../controllers/poperty.controller.js";
-
+import verifyToken from "../middlewares/auth.middleware.js";
 import { upload } from "../utils/cloudinary.js";
 
 const cpUpload = upload.fields([
@@ -17,7 +17,7 @@ const cpUpload = upload.fields([
 const router = express.Router();
 
 // Create a new property
-router.post("/",cpUpload, createProperty);
+router.post("/", verifyToken, cpUpload, createProperty);
 
 // Get all properties
 router.get("/", getAllProperties);
@@ -26,8 +26,9 @@ router.get("/", getAllProperties);
 router.get("/:id", getPropertyById);
 
 // Update a property by ID
-router.put("/:id", updateProperty);
+router.put("/:id", verifyToken, updateProperty);
 
-router.delete("/:id", deleteProperty);
+// Delete a property
+router.delete("/:id", verifyToken, deleteProperty);
 
 export default router;

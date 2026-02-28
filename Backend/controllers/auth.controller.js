@@ -11,11 +11,20 @@ dotenv.config();
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email }).populate("posts");
+    
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
 
-    const matchPassowrd = await bcrypt.compare(password, user.password);
+    const user = await User.findOne({ email });
 
-    if (!user || !matchPassowrd) {
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const matchPassword = await bcrypt.compare(password, user.password);
+
+    if (!matchPassword) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
