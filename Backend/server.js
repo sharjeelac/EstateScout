@@ -13,7 +13,15 @@ connectDB();
 const app = express()
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000', // For local development
+    'https://estate-scout-psi.vercel.app' // Your deployed Vercel frontend (NO trailing slash)
+  ],
+  credentials: true
+}));
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
